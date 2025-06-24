@@ -1,0 +1,25 @@
+name: Build CV PDF
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t cv-builder .
+
+      - name: Run PDF build inside Docker
+        run: docker run --rm -v "${{ github.workspace }}/output:/output" cv-builder
+
+      - name: Upload PDF as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: resume-pdf
+          path: output/main.pdf
