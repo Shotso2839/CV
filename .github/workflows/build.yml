@@ -17,9 +17,17 @@ jobs:
 
       - name: Run PDF build inside Docker
         run: docker run --rm -v "${{ github.workspace }}/output:/output" cv-builder
-
+        
       - name: Upload PDF as artifact
         uses: actions/upload-artifact@v4
         with:
           name: resume-pdf
           path: output/main.pdf
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: output
+
