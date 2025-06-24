@@ -19,7 +19,7 @@ jobs:
         run: docker run --rm -v "${{ github.workspace }}/output:/output" cv-builder
 
       - name: Upload PDF as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: resume-pdf
           path: output/main.pdf
